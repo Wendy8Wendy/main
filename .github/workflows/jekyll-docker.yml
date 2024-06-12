@@ -1,38 +1,13 @@
-name: Jekyll site CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
-            - name: Setup Go environment
-  uses: actions/setup-go@v5.0.1
-  with:
-    # The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks.
-    go-version: # optional
-    # Path to the go.mod or go.work file.
-    go-version-file: # optional
-    # Set this option to true if you want the action to always check for the latest available version that satisfies the version spec
-    check-latest: # optional
-    # Used to pull Go distributions from go-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
-    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
-    # Used to specify whether caching is needed. Set to true, if you'd like to enable caching.
-    cache: # optional, default is true
-    # Used to specify the path to a dependency file - go.sum
-    cache-dependency-path: # optional
-    # Target architecture for Go to use. Examples: x86, x64. Will use system architecture by default.
-    architecture: # optional
-          
+# Create a folder
+mkdir actions-runner && cd actions-runnerCopied!
+# Download the latest runner package
+curl -o actions-runner-linux-x64-2.317.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.317.0/actions-runner-linux-x64-2.317.0.tar.gz
+# Optional: Validate the hash
+echo "9e883d210df8c6028aff475475a457d380353f9d01877d51cc01a17b2a91161d  actions-runner-linux-x64-2.317.0.tar.gz" | shasum -a 256 -c
+# Extract the installer
+tar xzf ./actions-runner-linux-x64-2.317.0.tar.gz
+# Create the runner and start the configuration experience
+./config.sh --url https://github.com/Wendy8Wendy/main --token BI5IKZDQV5GI4G6QCJ4BHLLGNEVWM# Last step, run it!
+./run.sh
+# Use this YAML in your workflow file for each job
+runs-on: self-hosted# 
